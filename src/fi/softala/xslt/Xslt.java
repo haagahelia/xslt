@@ -31,20 +31,17 @@ public class Xslt {
 		File courseXml = new File(COURSE_XML_FILENAME);
 		File courseXsl = new File(COURSE_XSL_FILENAME);
 		File courseOutput = new File(COURSE_HTML_FILENAME);
-		System.out.println("XSLT " + COURSE_XML_FILENAME + " -> "
-				+ COURSE_HTML_FILENAME);
+		System.out.println("XSLT " + COURSE_XML_FILENAME + " -> " + COURSE_HTML_FILENAME);
 		t.transform(courseXml, courseXsl, courseOutput);
 
 		// EXERCISES
 		File exerciseXsl = new File(EXERCISE_XSL_FILENAME);
 		File exerciseFolder = new File(EXERCISE_FOLDER_NAME);
-		File[] exerciseXmls = exerciseFolder.listFiles((File folder,
-				String filename) -> filename.endsWith(EXERCISE_XML_ENDSWITH));
+		File[] exerciseXmls = exerciseFolder.listFiles(
+				(File folder, String filename) -> filename.endsWith(EXERCISE_XML_ENDSWITH));
 		for (File exerciseXml : exerciseXmls) {
-			String outputFileName = EXERCISE_FOLDER_NAME + "/"
-					+ exerciseXml.getName() + EXERCISE_HTML_ENDSWITH;
-			System.out.println("XSLT " + EXERCISE_FOLDER_NAME + "/"
-					+ exerciseXml.getName() + " -> " + outputFileName);
+			String outputFileName = EXERCISE_FOLDER_NAME + "/" + exerciseXml.getName() + EXERCISE_HTML_ENDSWITH;
+			System.out.println("XSLT " + EXERCISE_FOLDER_NAME + "/" + exerciseXml.getName() + " -> " + outputFileName);
 			t.transform(exerciseXml, exerciseXsl, new File(outputFileName));
 		}
 	}
@@ -57,8 +54,7 @@ public class Xslt {
 		this.tFactory = TransformerFactory.newInstance();
 	}
 
-	public void transform(File datafile, File stylesheet, File output)
-			throws Exception {
+	public void transform(File datafile, File stylesheet, File output) throws Exception {
 
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document document = builder.parse(datafile);
