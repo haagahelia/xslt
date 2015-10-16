@@ -21,7 +21,9 @@ public class Xslt {
 	public static final String EXERCISE_FOLDER_NAME = "xc";
 	public static final String EXERCISE_XML_ENDSWITH = ".xml";
 	public static final String EXERCISE_XSL_FILENAME = "xsl/exercise.xsl";
+	public static final String EXERCISE_STANDALONE_XSL_FILENAME = "xsl/exercise_standalone.xsl";
 	public static final String EXERCISE_HTML_ENDSWITH = ".html";
+	public static final String EXERCISE_STANDALONE_HTML_ENDSWITH = ".standalone.html";
 
 	public static void main(String[] args) throws Exception {
 
@@ -36,13 +38,19 @@ public class Xslt {
 
 		// EXERCISES
 		File exerciseXsl = new File(EXERCISE_XSL_FILENAME);
+		File exerciseStandaloneXsl = new File(EXERCISE_STANDALONE_XSL_FILENAME);
 		File exerciseFolder = new File(EXERCISE_FOLDER_NAME);
 		File[] exerciseXmls = exerciseFolder.listFiles(
 				(File folder, String filename) -> filename.endsWith(EXERCISE_XML_ENDSWITH));
 		for (File exerciseXml : exerciseXmls) {
+			//embed
 			String outputFileName = EXERCISE_FOLDER_NAME + "/" + exerciseXml.getName() + EXERCISE_HTML_ENDSWITH;
 			System.out.println("XSLT " + EXERCISE_FOLDER_NAME + "/" + exerciseXml.getName() + " -> " + outputFileName);
 			t.transform(exerciseXml, exerciseXsl, new File(outputFileName));
+			//standalone
+			String standaloneOutputFileName = exerciseXml.getName() + EXERCISE_STANDALONE_HTML_ENDSWITH;
+			System.out.println("XSLT " + EXERCISE_FOLDER_NAME + "/" + exerciseXml.getName() + " -> " + standaloneOutputFileName);
+			t.transform(exerciseXml, exerciseStandaloneXsl, new File(standaloneOutputFileName));
 		}
 	}
 
